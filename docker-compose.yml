@@ -1,0 +1,29 @@
+version: '3.1'
+networks:
+  kafka-net:
+services:
+  zookeeper:
+    image: zookeeper:3.8.0
+    ports:
+      - '50000:2181'
+    container_name: zookeeper
+    networks:
+      - kafka-net
+  kafka:
+    image: ches/kafka
+    container_name: kafka
+    ports:
+      - '50001:9092'
+      - '50002:9093'
+    depends_on:
+      - zookeeper
+    networks:
+      - kafka-net
+    environment:
+      - ZOOKEEPER_IP=zookeeper
+#      - JMX_PORT=5577
+    volumes:
+      - ./kafka-config/topics-init.sh:/docker-entrypoint-init.d/topics-init.sh
+#    entrypoint: ["bash", "-c", "/init/topics-init.sh"]
+#    command:
+#      - sh -c "/usr/local/bin/init.sh && exec /bin/kafka-topics.sh --create --topic test --replication-factor 1 --partitions 1 --zookeeper zookeeper:2181"
