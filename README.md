@@ -1,5 +1,7 @@
 # Tutorial for Apache Kafka
 
+This tutorial follows: https://www.youtube.com/watch?v=xCyW3S-vgGA&list=PLGRDMO4rOGcNLwoack4ZiTyewUcF6y6BU
+
 ## commands
 #### A non-default bridge network enables convenient name-to-hostname discovery
 $ docker network create kafka-net
