@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class ConsumerListener {
 
   @KafkaListener(topics = TOPIC_NAME, groupId = "myGroup")
-  public void listenTopic(String message) {
+  public void listenTopic(Message message) {
     log.info("Message reveived: {}", message);
   }
 
