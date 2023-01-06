@@ -12,7 +12,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 public class WikimediaChangeHandler implements EventHandler {
 
   private static final ObjectMapper MAPPER = new ObjectMapper().findAndRegisterModules();
-  private final KafkaTemplate<String, WikimediaData> kafkaTemplate;
+  private final KafkaTemplate<String, WikimediaDataDto> kafkaTemplate;
   private final String topic;
 
   @Override
@@ -31,7 +31,7 @@ public class WikimediaChangeHandler implements EventHandler {
     try {
       kafkaTemplate.send(
           topic,
-          MAPPER.readValue(messageEvent.getData(), WikimediaData.class)
+          MAPPER.readValue(messageEvent.getData(), WikimediaDataDto.class)
       );
     } catch (Exception e) {
       log.error("Error: ",e);
