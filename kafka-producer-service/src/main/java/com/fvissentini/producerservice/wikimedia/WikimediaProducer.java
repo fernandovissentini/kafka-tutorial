@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class WikimediaProducer {
 
-  private KafkaTemplate<String, WikimediaDataDto> kafkaTemplate;
+  private KafkaTemplate<String, String> kafkaTemplate;
 
   @SneakyThrows
   @EventListener(ApplicationReadyEvent.class)

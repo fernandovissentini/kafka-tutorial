@@ -1,6 +1,5 @@
 package com.fvissentini.producerservice.wikimedia;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.launchdarkly.eventsource.EventHandler;
 import com.launchdarkly.eventsource.MessageEvent;
 import lombok.AllArgsConstructor;
@@ -11,8 +10,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 @Slf4j
 public class WikimediaChangeHandler implements EventHandler {
 
-  private static final ObjectMapper MAPPER = new ObjectMapper().findAndRegisterModules();
-  private final KafkaTemplate<String, WikimediaDataDto> kafkaTemplate;
+  private final KafkaTemplate<String, String> kafkaTemplate;
   private final String topic;
 
   @Override
@@ -31,7 +29,7 @@ public class WikimediaChangeHandler implements EventHandler {
     try {
       kafkaTemplate.send(
           topic,
-          MAPPER.readValue(messageEvent.getData(), WikimediaDataDto.class)
+          messageEvent.getData()
       );
     } catch (Exception e) {
       log.error("Error: ",e);
